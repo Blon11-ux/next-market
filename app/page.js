@@ -1,12 +1,13 @@
 import Link from "next/link"
 import Image from "next/image"
-import connectDB from "../utils/database"
-import { ItemModel } from "../utils/schemaModels"
+
+const BASE_URL = process.env.NEXT_PUBLIC_URL || "https://next-market-taupe.vercel.app"
 
 const getAllItems = async() => {
-    await connectDB()
-    const allItems = await ItemModel.find()
-    return JSON.parse(JSON.stringify(allItems))
+    const response = await fetch(`${BASE_URL}/api/item/readall`, {cache: "no-store"})
+    const jsonData = await response.json()
+    const allItems = jsonData.allItems
+    return allItems
 }
 
 const ReadAllItems = async() => {
