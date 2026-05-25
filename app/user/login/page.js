@@ -8,16 +8,13 @@ const Login = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         try{
-            const response = await fetch("http://localhost:3000/api/user/login", {
+            const response = await fetch("/api/user/login", {
                 method: "POST",
                 headers: { 
                     "Accept": "application/json", 
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
+                body: JSON.stringify({email, password})
             })
             const jsonData = await response.json() 
             localStorage.setItem("token", jsonData.token) 
@@ -29,8 +26,6 @@ const Login = () => {
     
     return (
         <div>
-            <title>ログインページ</title>
-            <meta name="description" content="ログインページです"/>
             <h1 className="page-title">ログイン</h1>
             <form onSubmit={handleSubmit}>
                 <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" name="email" placeholder="メールアドレス" required/>

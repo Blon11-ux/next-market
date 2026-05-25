@@ -1,6 +1,7 @@
 import Image from "next/image"  
 import Link from "next/link" 
 
+const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000"
 
 export async function generateMetadata(context){
     const { id } = await context.params  
@@ -15,7 +16,7 @@ export async function generateMetadata(context){
 }
 
 const getSingleItem = async(id) => {
-    const response = await fetch(`http://localhost:3000/api/item/readsingle/${id}`, {cache: "no-store"})
+    const response = await fetch(`${BASE_URL}/api/item/readsingle/${id}`, {cache: "no-store"})
     const jsonData = await response.json() 
     const singleItem = jsonData.singleItem
     return singleItem 
