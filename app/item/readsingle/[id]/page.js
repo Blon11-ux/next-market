@@ -1,7 +1,13 @@
 import Image from "next/image"  
-import Link from "next/link" 
+import Link from "next/link"
+import connectDB from "../../../utils/database"
+import { ItemModel } from "../../../utils/schemaModels"
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000"
+const getSingleItem = async(id) => {
+    await connectDB()
+    const singleItem = await ItemModel.findById(id)
+    return JSON.parse(JSON.stringify(singleItem))
+}
 
 export async function generateMetadata(context){
     const { id } = await context.params  
@@ -14,13 +20,6 @@ export async function generateMetadata(context){
         description: singleItem.description
     }
 }
-
-const getSingleItem = async(id) => {
-    const response = await fetch(`${BASE_URL}/api/item/readsingle/${id}`, {cache: "no-store"})
-    const jsonData = await response.json() 
-    const singleItem = jsonData.singleItem
-    return singleItem 
-}  
 
 const ReadSingleItem = async(context) => {
     const {id} = await context.params;

@@ -1,12 +1,11 @@
 import MyPage from "./myPage"
-
-const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000"
+import connectDB from "../../../utils/database"
+import { ItemModel } from "../../../utils/schemaModels"
 
 export async function generateMetadata(context){
     const { id } = await context.params
-    const response = await fetch(`${BASE_URL}/api/item/readsingle/${id}`, {cache: "no-store"})
-    const jsonData = await response.json()
-    const singleItem = jsonData.singleItem
+    await connectDB()
+    const singleItem = await ItemModel.findById(id)
     return {
         title: singleItem?.title ?? 'Edit Item',
         description: singleItem?.description ?? ''
