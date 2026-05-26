@@ -3,6 +3,8 @@ import Image from "next/image"
 import connectDB from "./utils/database"
 import { ItemModel } from "./utils/schemaModels"
 
+export const revalidate = 0
+
 const getAllItems = async() => {
     await connectDB()
     const allItems = await ItemModel.find()
